@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book with us</title>
+  <title>Medgel Georgia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
@@ -100,16 +100,9 @@
       font-size: clamp(1.65rem, 4vw, 2rem);
       font-weight: 600;
       line-height: 1.2;
-      margin: 0 0 0.75rem;
+      margin: 0;
       letter-spacing: -0.02em;
       color: var(--text);
-    }
-
-    .biz-card__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      align-items: center;
     }
 
     .badge {
@@ -198,33 +191,14 @@
       border-radius: 2px;
     }
 
-    .btn-booking {
-      display: inline-flex;
+    .biz-card__foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
       align-items: center;
-      justify-content: center;
-      padding: 0.8rem 1.75rem;
-      font: inherit;
-      font-weight: 600;
-      font-size: 1rem;
-      color: #fff;
-      background: linear-gradient(180deg, var(--accent), var(--accent-dim));
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.12s, filter 0.12s;
-    }
-
-    .btn-booking:hover {
-      filter: brightness(1.06);
-    }
-
-    .btn-booking:active {
-      transform: scale(0.99);
-    }
-
-    .btn-booking:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
     }
 
     .card-embed {
@@ -348,10 +322,6 @@
       <article class="biz-card" aria-labelledby="biz-name">
         <header class="biz-card__head">
           <h1 id="biz-name" class="biz-card__title">Medgel Georgia</h1>
-          <div class="biz-card__tags">
-            <span class="badge badge--ok">Approved</span>
-            <span class="badge badge--type">Clinic</span>
-          </div>
         </header>
         <p class="biz-card__desc">Laser hair removal service</p>
         <dl class="biz-dl">
@@ -376,8 +346,11 @@
             <dd>27 Akaki Tsereteli Ave, Tbilisi 0119, Georgia</dd>
           </div>
         </dl>
+        <div class="biz-card__foot" aria-label="Business verification">
+          <span class="badge badge--ok">Verified</span>
+          <span class="badge badge--type">Clinic</span>
+        </div>
       </article>
-      <button type="button" class="btn-booking" id="btn-booking">Booking</button>
     </div>
 
     <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
@@ -403,7 +376,6 @@
   <script>
     (function () {
       var MEDNI_BOOKING_URL = "https://www.medni.ge/en/booking/medgel";
-      var btnBooking = document.getElementById("btn-booking");
       var btnClose = document.getElementById("btn-close-embed");
       var mainWrap = document.getElementById("main-wrap");
       var panelEmbed = document.getElementById("panel-embed");
@@ -445,22 +417,10 @@
         clearLoadTimeout();
       }
 
-      function showEmbed() {
-        mainWrap.classList.add("embed-open");
-        panelEmbed.hidden = false;
-        if (frame.getAttribute("src")) {
-          loader.hidden = true;
-          frame.classList.add("is-ready");
-          return;
-        }
-        beginIframeLoad();
-      }
-
       frame.addEventListener("load", onFrameLoad);
 
       beginIframeLoad();
 
-      btnBooking.addEventListener("click", showEmbed);
       btnClose.addEventListener("click", hideEmbed);
     })();
   </script>
