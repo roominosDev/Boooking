@@ -269,6 +269,92 @@
       background: rgba(0, 0, 0, 0.18);
     }
 
+    .biz-services {
+      width: 100%;
+      max-width: 28rem;
+      justify-self: center;
+      background: linear-gradient(165deg, rgba(26, 34, 45, 0.95) 0%, rgba(18, 24, 32, 0.98) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      padding: 1.25rem 1.35rem 1.2rem;
+    }
+
+    .biz-services__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .biz-services__title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .biz-services__more {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      white-space: nowrap;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .biz-services__more:hover {
+      border-bottom-color: rgba(61, 156, 240, 0.5);
+    }
+
+    .biz-services__more:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .biz-services__group {
+      margin-bottom: 1rem;
+    }
+
+    .biz-services__group:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .biz-services__label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+
+    .biz-services__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .service-chip {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #d4dee8;
+      padding: 0.4rem 0.65rem;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(45, 58, 74, 0.9);
+    }
+
     .card-embed {
       display: flex;
       flex-direction: column;
@@ -373,7 +459,7 @@
               <h1 id="biz-name" class="biz-card__title">Medgel Georgia</h1>
             </div>
           </header>
-          <p class="biz-card__desc">Laser hair removal service</p>
+          <p class="biz-card__desc">Beauty &amp; aesthetic clinic — science-backed face and body treatments in Tbilisi.</p>
           <nav class="biz-contact-wrap" aria-label="Contact">
             <ul class="biz-contact">
               <li>
@@ -424,6 +510,35 @@
           </div>
         </div>
       </article>
+
+      <section class="biz-services" aria-labelledby="services-title">
+        <div class="biz-services__head">
+          <h2 id="services-title" class="biz-services__title">Services</h2>
+          <a class="biz-services__more" href="https://medgel.ge/services" rel="noopener noreferrer" target="_blank">All services →</a>
+        </div>
+        <div class="biz-services__group">
+          <h3 class="biz-services__label">Face</h3>
+          <div class="biz-services__chips">
+            <span class="service-chip">Ultherapy</span>
+            <span class="service-chip">Facial cleansing</span>
+            <span class="service-chip">Microneedling</span>
+            <span class="service-chip">Acne treatment</span>
+            <span class="service-chip">Biorevitalization</span>
+            <span class="service-chip">Botox</span>
+            <span class="service-chip">Chemical peeling</span>
+            <span class="service-chip">Pigmentation treatment</span>
+            <span class="service-chip">Hydrafacial</span>
+          </div>
+        </div>
+        <div class="biz-services__group">
+          <h3 class="biz-services__label">Body</h3>
+          <div class="biz-services__chips">
+            <span class="service-chip">Laser hair removal</span>
+            <span class="service-chip">Biorevitalization</span>
+            <span class="service-chip">Mesotherapy</span>
+          </div>
+        </div>
+      </section>
     </div>
 
     <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
