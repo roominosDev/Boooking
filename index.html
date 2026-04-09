@@ -46,33 +46,42 @@
     .wrap {
       position: relative;
       z-index: 1;
-      max-width: 1080px;
+      max-width: 40rem;
       margin: 0 auto;
-      padding: clamp(2rem, 5vw, 4rem) clamp(1.25rem, 4vw, 2rem);
-      display: grid;
-      gap: clamp(2.5rem, 6vw, 4rem);
-      align-items: start;
+      padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 2rem) clamp(2rem, 4vw, 3rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      transition: max-width 0.35s ease;
     }
 
-    @media (min-width: 880px) {
-      .wrap {
-        grid-template-columns: 1fr 1fr;
-        align-items: start;
-      }
+    .wrap.embed-open {
+      max-width: min(1240px, calc(100% - 2rem));
+      align-items: stretch;
     }
 
     .hero {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      max-width: 32rem;
-      margin-inline: auto;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      max-width: 34rem;
     }
 
-    @media (min-width: 880px) {
-      .hero {
-        margin-inline: 0;
-        padding-top: 0.25rem;
+    .wrap.embed-open .hero {
+      align-items: flex-start;
+      text-align: left;
+      max-width: 36rem;
+      margin-bottom: clamp(1.25rem, 3vw, 1.75rem);
+    }
+
+    @media (min-width: 720px) {
+      .wrap.embed-open .hero {
+        margin-inline: auto;
+        align-items: center;
+        text-align: center;
       }
     }
 
@@ -91,6 +100,20 @@
       line-height: 1.65;
       margin: 0 0 1.375rem;
       max-width: 38ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .wrap.embed-open .hero .lead {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    @media (min-width: 720px) {
+      .wrap.embed-open .hero .lead {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     .hero ul {
@@ -98,6 +121,21 @@
       padding: 0;
       margin: 0 0 1.75rem;
       width: 100%;
+      max-width: 22rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .wrap.embed-open .hero ul {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    @media (min-width: 720px) {
+      .wrap.embed-open .hero ul {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
 
     .hero li {
@@ -108,6 +146,7 @@
       font-size: 0.95rem;
       line-height: 1.5;
       margin-bottom: 0.625rem;
+      text-align: left;
     }
 
     .hero li::before {
@@ -117,13 +156,14 @@
       border-radius: 50%;
       background: var(--accent);
       flex-shrink: 0;
+      margin-top: 0.35em;
     }
 
     .btn-booking {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0.8rem 1.5rem;
+      padding: 0.8rem 1.75rem;
       font: inherit;
       font-weight: 600;
       font-size: 1rem;
@@ -148,33 +188,16 @@
       outline-offset: 3px;
     }
 
-    .right-col {
-      width: 100%;
-      max-width: 520px;
-      margin-inline: auto;
-    }
-
-    @media (min-width: 880px) {
-      .right-col {
-        margin-inline: 0;
-        justify-self: stretch;
-      }
-    }
-
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: clamp(1.5rem, 4vw, 2rem);
-      box-shadow: var(--shadow);
-    }
-
     .card-embed {
       display: flex;
       flex-direction: column;
-      padding: 0;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       overflow: hidden;
-      min-height: min(640px, 75vh);
+      min-height: min(720px, 82vh);
     }
 
     .card-embed[hidden] {
@@ -219,7 +242,7 @@
     .embed-body {
       position: relative;
       flex: 1;
-      min-height: min(560px, 68vh);
+      min-height: min(640px, 78vh);
       background: var(--bg);
     }
 
@@ -233,7 +256,6 @@
       gap: 1rem;
       background: var(--surface);
       z-index: 2;
-      transition: opacity 0.25s ease;
     }
 
     .embed-loader[hidden] {
@@ -277,86 +299,6 @@
       pointer-events: auto;
     }
 
-    .card h2 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin: 0 0 0.35rem;
-    }
-
-    .card .sub {
-      color: var(--muted);
-      font-size: 0.9rem;
-      margin: 0 0 1.5rem;
-    }
-
-    label {
-      display: block;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 0.65rem 0.85rem;
-      font: inherit;
-      color: var(--text);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(61, 156, 240, 0.2);
-    }
-
-    textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-
-    .row {
-      display: grid;
-      gap: 1rem;
-    }
-
-    @media (min-width: 480px) {
-      .row.two {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    button[type="submit"] {
-      width: 100%;
-      margin-top: 0.25rem;
-      padding: 0.85rem 1.25rem;
-      font: inherit;
-      font-weight: 600;
-      color: #fff;
-      background: linear-gradient(180deg, var(--accent), var(--accent-dim));
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: transform 0.12s, filter 0.12s;
-    }
-
-    button[type="submit"]:hover {
-      filter: brightness(1.05);
-    }
-
-    button[type="submit"]:active {
-      transform: scale(0.99);
-    }
-
     footer {
       text-align: center;
       color: var(--muted);
@@ -370,7 +312,7 @@
 <body>
   <div class="bg-gradient" aria-hidden="true"></div>
 
-  <main class="wrap">
+  <main class="wrap" id="main-wrap">
     <section class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title">Reserve your spot in minutes</h1>
       <p class="lead">
@@ -384,95 +326,43 @@
       <button type="button" class="btn-booking" id="btn-booking">Booking</button>
     </section>
 
-    <div class="right-col">
-      <section class="card" id="panel-form" aria-labelledby="form-title">
-        <h2 id="form-title">Request a booking</h2>
-        <p class="sub">Fill in the details below. Fields marked with * are required.</p>
-
-        <form action="#" method="post">
-          <div class="row two">
-            <div>
-              <label for="name">Full name *</label>
-              <input id="name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe" />
-            </div>
-            <div>
-              <label for="email">Email *</label>
-              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com" />
-            </div>
-          </div>
-
-          <div class="row two">
-            <div>
-              <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+1 555 000 0000" />
-            </div>
-            <div>
-              <label for="service">Service *</label>
-              <select id="service" name="service" required>
-                <option value="" disabled selected>Select one</option>
-                <option value="consult">Consultation</option>
-                <option value="standard">Standard session</option>
-                <option value="extended">Extended session</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row two">
-            <div>
-              <label for="date">Preferred date *</label>
-              <input id="date" name="date" type="date" required />
-            </div>
-            <div>
-              <label for="time">Preferred time *</label>
-              <input id="time" name="time" type="time" required />
-            </div>
-          </div>
-
-          <label for="notes">Notes (optional)</label>
-          <textarea id="notes" name="notes" placeholder="Anything we should know?"></textarea>
-
-          <button type="submit">Submit request</button>
-        </form>
-      </section>
-
-      <section class="card card-embed" id="panel-embed" aria-label="Medni online booking" hidden>
-        <div class="embed-head">
-          <span>Medni · Book an appointment</span>
-          <button type="button" class="btn-ghost" id="btn-back-form">Back to form</button>
+    <section class="card-embed" id="panel-embed" aria-label="Medni online booking" hidden>
+      <div class="embed-head">
+        <span>Medni · Book an appointment</span>
+        <button type="button" class="btn-ghost" id="btn-close-embed">Close</button>
+      </div>
+      <div class="embed-body">
+        <div class="embed-loader" id="embed-loader" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p>Loading booking…</p>
         </div>
-        <div class="embed-body">
-          <div class="embed-loader" id="embed-loader" hidden>
-            <div class="spinner" aria-hidden="true"></div>
-            <p>Loading booking…</p>
-          </div>
-          <iframe
-            id="booking-frame"
-            class="booking-iframe"
-            title="Medni booking — Medgel Georgia"
-            allow="clipboard-read; clipboard-write; fullscreen"
-          ></iframe>
-        </div>
-      </section>
-    </div>
+        <iframe
+          id="booking-frame"
+          class="booking-iframe"
+          title="Medni booking — Medgel Georgia"
+          allow="clipboard-read; clipboard-write; fullscreen"
+        ></iframe>
+      </div>
+    </section>
   </main>
 
-  <footer>© <span id="y"></span> Booking. Demo form — wire <code>action</code> to your backend.</footer>
+  <footer>© <span id="y"></span> Booking.</footer>
   <script>
     document.getElementById("y").textContent = new Date().getFullYear();
 
     (function () {
       var MEDNI_BOOKING_URL = "https://www.medni.ge/en/booking/medgel";
       var btnBooking = document.getElementById("btn-booking");
-      var btnBack = document.getElementById("btn-back-form");
-      var panelForm = document.getElementById("panel-form");
+      var btnClose = document.getElementById("btn-close-embed");
+      var mainWrap = document.getElementById("main-wrap");
       var panelEmbed = document.getElementById("panel-embed");
       var loader = document.getElementById("embed-loader");
       var frame = document.getElementById("booking-frame");
       var loadTimeoutId;
 
-      function showForm() {
+      function hideEmbed() {
         panelEmbed.hidden = true;
-        panelForm.hidden = false;
+        mainWrap.classList.remove("embed-open");
         if (loadTimeoutId) {
           clearTimeout(loadTimeoutId);
           loadTimeoutId = null;
@@ -480,7 +370,7 @@
       }
 
       function showEmbed() {
-        panelForm.hidden = true;
+        mainWrap.classList.add("embed-open");
         panelEmbed.hidden = false;
 
         if (loadTimeoutId) {
@@ -519,7 +409,7 @@
       });
 
       btnBooking.addEventListener("click", showEmbed);
-      btnBack.addEventListener("click", showForm);
+      btnClose.addEventListener("click", hideEmbed);
     })();
   </script>
 </body>
