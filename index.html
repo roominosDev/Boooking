@@ -57,45 +57,145 @@
 
     @media (min-width: 900px) {
       .wrap.embed-open {
-        grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+        grid-template-columns: minmax(280px, 400px) minmax(0, 1fr);
         column-gap: clamp(1.75rem, 4vw, 2.5rem);
       }
     }
 
-    .hero {
+    .left-stack {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      text-align: start;
+      gap: 1.25rem;
       width: 100%;
-      max-width: 38rem;
+      max-width: 26rem;
       justify-self: center;
     }
 
     @media (min-width: 900px) {
-      .wrap.embed-open .hero {
+      .wrap.embed-open .left-stack {
         position: sticky;
         top: clamp(1.5rem, 4vw, 2rem);
       }
     }
 
-    .hero h1 {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(2.25rem, 5vw, 3.25rem);
-      font-weight: 600;
-      line-height: 1.18;
-      margin: 0 0 0.75rem;
-      letter-spacing: -0.02em;
+    .biz-card {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.35rem 1.35rem 1.25rem;
+      text-align: start;
     }
 
-    .hero h5 {
-      font-family: "DM Sans", system-ui, sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
+    .biz-card__head {
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .biz-card__title {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.65rem, 4vw, 2rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .biz-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.6rem;
+      border-radius: 999px;
+      line-height: 1;
+    }
+
+    .badge--ok {
+      color: #b8f5e0;
+      background: rgba(46, 196, 139, 0.18);
+      border: 1px solid rgba(46, 196, 139, 0.35);
+    }
+
+    .badge--type {
+      color: var(--muted);
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+    }
+
+    .biz-card__desc {
+      font-size: 0.9375rem;
       line-height: 1.55;
       color: var(--muted);
-      margin: 0 0 1.5rem;
-      max-width: 34ch;
+      margin: 0 0 1.25rem;
+    }
+
+    .biz-dl {
+      margin: 0;
+      display: grid;
+      gap: 1rem 1.25rem;
+    }
+
+    @media (min-width: 340px) {
+      .biz-dl {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .biz-dl .biz-row--wide {
+        grid-column: 1 / -1;
+      }
+    }
+
+    .biz-row {
+      margin: 0;
+    }
+
+    .biz-row dt {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.35rem;
+    }
+
+    .biz-row dd {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    .biz-row a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .biz-row a:hover {
+      border-bottom-color: rgba(61, 156, 240, 0.5);
+    }
+
+    .biz-row a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
     .btn-booking {
@@ -244,11 +344,41 @@
   <div class="bg-gradient" aria-hidden="true"></div>
 
   <main class="wrap embed-open" id="main-wrap">
-    <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">Medni Georgia</h1>
-      <h5>We provide Laser hair removal service</h5>
+    <div class="left-stack">
+      <article class="biz-card" aria-labelledby="biz-name">
+        <header class="biz-card__head">
+          <h1 id="biz-name" class="biz-card__title">Medgel Georgia</h1>
+          <div class="biz-card__tags">
+            <span class="badge badge--ok">Approved</span>
+            <span class="badge badge--type">Clinic</span>
+          </div>
+        </header>
+        <p class="biz-card__desc">Laser hair removal service</p>
+        <dl class="biz-dl">
+          <div class="biz-row">
+            <dt>City</dt>
+            <dd>Tbilisi</dd>
+          </div>
+          <div class="biz-row">
+            <dt>Email</dt>
+            <dd><a href="mailto:info@medgel.ge">info@medgel.ge</a></dd>
+          </div>
+          <div class="biz-row">
+            <dt>Phone</dt>
+            <dd><a href="tel:+995596575757">+995 596 57 57 57</a></dd>
+          </div>
+          <div class="biz-row">
+            <dt>Website</dt>
+            <dd><a href="https://medgel.ge" rel="noopener noreferrer" target="_blank">medgel.ge</a></dd>
+          </div>
+          <div class="biz-row biz-row--wide">
+            <dt>Address</dt>
+            <dd>27 Akaki Tsereteli Ave, Tbilisi 0119, Georgia</dd>
+          </div>
+        </dl>
+      </article>
       <button type="button" class="btn-booking" id="btn-booking">Booking</button>
-    </section>
+    </div>
 
     <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
       <div class="embed-head">
