@@ -243,20 +243,20 @@
 <body>
   <div class="bg-gradient" aria-hidden="true"></div>
 
-  <main class="wrap" id="main-wrap">
+  <main class="wrap embed-open" id="main-wrap">
     <section class="hero" aria-labelledby="hero-title">
       <h1 id="hero-title">Medni Georgia</h1>
       <h5>We provide Laser hair removal service</h5>
       <button type="button" class="btn-booking" id="btn-booking">Booking</button>
     </section>
 
-    <section class="card-embed" id="panel-embed" aria-label="Medni online booking" hidden>
+    <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
       <div class="embed-head">
         <span>Medni · Book an appointment</span>
         <button type="button" class="btn-ghost" id="btn-close-embed">Close</button>
       </div>
       <div class="embed-body">
-        <div class="embed-loader" id="embed-loader" hidden>
+        <div class="embed-loader" id="embed-loader">
           <div class="spinner" aria-hidden="true"></div>
           <p>Loading booking…</p>
         </div>
@@ -281,34 +281,27 @@
       var frame = document.getElementById("booking-frame");
       var loadTimeoutId;
 
-      function hideEmbed() {
-        panelEmbed.hidden = true;
-        mainWrap.classList.remove("embed-open");
+      function clearLoadTimeout() {
         if (loadTimeoutId) {
           clearTimeout(loadTimeoutId);
           loadTimeoutId = null;
         }
       }
 
-      function showEmbed() {
-        mainWrap.classList.add("embed-open");
-        panelEmbed.hidden = false;
+      function onFrameLoad() {
+        if (panelEmbed.hidden) return;
+        var src = frame.getAttribute("src") || "";
+        if (!src || src.indexOf("medni.ge") === -1) return;
+        clearLoadTimeout();
+        loader.hidden = true;
+        frame.classList.add("is-ready");
+      }
 
-        if (loadTimeoutId) {
-          clearTimeout(loadTimeoutId);
-          loadTimeoutId = null;
-        }
-
-        if (frame.getAttribute("src")) {
-          loader.hidden = true;
-          frame.classList.add("is-ready");
-          return;
-        }
-
+      function beginIframeLoad() {
+        clearLoadTimeout();
         loader.hidden = false;
         frame.classList.remove("is-ready");
         frame.src = MEDNI_BOOKING_URL;
-
         loadTimeoutId = setTimeout(function () {
           loader.hidden = true;
           frame.classList.add("is-ready");
@@ -316,18 +309,26 @@
         }, 20000);
       }
 
-      frame.addEventListener("load", function () {
-        if (panelEmbed.hidden) return;
-        var src = frame.getAttribute("src") || "";
-        if (!src || src.indexOf("medni.ge") === -1) return;
+      function hideEmbed() {
+        panelEmbed.hidden = true;
+        mainWrap.classList.remove("embed-open");
+        clearLoadTimeout();
+      }
 
-        if (loadTimeoutId) {
-          clearTimeout(loadTimeoutId);
-          loadTimeoutId = null;
+      function showEmbed() {
+        mainWrap.classList.add("embed-open");
+        panelEmbed.hidden = false;
+        if (frame.getAttribute("src")) {
+          loader.hidden = true;
+          frame.classList.add("is-ready");
+          return;
         }
-        loader.hidden = true;
-        frame.classList.add("is-ready");
-      });
+        beginIframeLoad();
+      }
+
+      frame.addEventListener("load", onFrameLoad);
+
+      beginIframeLoad();
 
       btnBooking.addEventListener("click", showEmbed);
       btnClose.addEventListener("click", hideEmbed);
