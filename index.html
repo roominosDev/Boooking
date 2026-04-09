@@ -17,6 +17,13 @@
       --accent: #3d9cf0;
       --radius: 12px;
       --shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+
+      /*
+        Cross-origin crop tuning (used only when Strategy B applies).
+        Approximate chrome heights on the embedded site; adjust if the partner layout changes.
+      */
+      --embed-chrome-header: clamp(52px, 10dvh, 88px);
+      --embed-chrome-footer: clamp(80px, 14dvh, 160px);
     }
 
     * {
@@ -42,6 +49,7 @@
       z-index: 0;
     }
 
+    /* Main content: centered, responsive (unchanged intent). */
     main {
       position: relative;
       z-index: 1;
@@ -76,23 +84,22 @@
       display: none !important;
     }
 
-    .embed-head {
-      padding: 0.85rem 1rem 0.85rem 1.15rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .embed-head span {
-      font-size: 0.8125rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
     .embed-body {
       position: relative;
       flex: 1;
       min-height: 0;
       background: var(--bg);
+    }
+
+    /*
+      Clip container for the iframe.
+      Strategy A (same-origin): overflow hidden still OK; iframe fills the box and inner header/footer are hidden via JS.
+      Strategy B (cross-origin): overflow hidden crops a taller, upward-shifted iframe to hide top/bottom chrome visually.
+    */
+    .embed-crop {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
     }
 
     .embed-loader {
@@ -132,10 +139,12 @@
       }
     }
 
+    /* Default / Strategy A: iframe fills the crop box. */
     .booking-iframe {
       position: absolute;
-      inset: 0;
+      left: 0;
       width: 100%;
+      top: 0;
       height: 100%;
       border: 0;
       opacity: 0;
@@ -147,6 +156,16 @@
       opacity: 1;
       pointer-events: auto;
     }
+
+    /*
+      Strategy B (cross-origin): cannot access iframe document, so we simulate hiding header/footer
+      by making the iframe taller than the viewport and shifting it up; overflow:hidden on .embed-crop
+      clips the top (header) and bottom (footer). Tweak --embed-chrome-header / --embed-chrome-footer if needed.
+    */
+    .embed-crop--strategy-crop .booking-iframe {
+      top: calc(-1 * var(--embed-chrome-header));
+      height: calc(100% + var(--embed-chrome-header) + var(--embed-chrome-footer));
+    }
   </style>
 </head>
 <body>
@@ -154,19 +173,20 @@
 
   <main>
     <section class="card-embed" id="panel-embed" aria-label="Online booking">
-      <div class="embed-head">
-      </div>
       <div class="embed-body">
         <div class="embed-loader" id="embed-loader">
           <div class="spinner" aria-hidden="true"></div>
           <p>Loading …</p>
         </div>
-        <iframe
-          id="booking-frame"
-          class="booking-iframe"
-          title="Medni booking — Medgel Georgia"
-          allow="clipboard-read; clipboard-write; fullscreen"
-        ></iframe>
+        <!-- Wrapper required for Strategy B clipping; Strategy A uses it as a simple full-bleed box. -->
+        <div class="embed-crop" id="embed-crop">
+          <iframe
+            id="booking-frame"
+            class="booking-iframe"
+            title="Medni booking — Medgel Georgia"
+            allow="clipboard-read; clipboard-write; fullscreen"
+          ></iframe>
+        </div>
       </div>
     </section>
   </main>
@@ -177,6 +197,7 @@
       var panelEmbed = document.getElementById("panel-embed");
       var loader = document.getElementById("embed-loader");
       var frame = document.getElementById("booking-frame");
+      var crop = document.getElementById("embed-crop");
       var loadTimeoutId;
 
       function clearLoadTimeout() {
@@ -186,17 +207,66 @@
         }
       }
 
+      /**
+       * After load, either:
+       * Strategy A — Same-origin: read the iframe document and set header/footer to display:none (clean, exact).
+       * Strategy B — Cross-origin: parent cannot read child DOM (browser security). Use CSS crop on .embed-crop.
+       */
+      function applyIframeChromeStrategy() {
+        crop.classList.remove("embed-crop--strategy-crop");
+
+        var sameOrigin = false;
+        try {
+          var win = frame.contentWindow;
+          var doc = frame.contentDocument;
+          if (!doc || !win) {
+            throw new Error("no document");
+          }
+          /* Reading location.origin on a cross-origin frame throws SecurityError. */
+          if (win.location.origin !== window.location.origin) {
+            throw new Error("cross-origin");
+          }
+          sameOrigin = true;
+        } catch (err) {
+          sameOrigin = false;
+        }
+
+        if (sameOrigin) {
+          /* Strategy A: same-origin — hide semantic <header> / <footer> inside the iframe. */
+          try {
+            var idoc = frame.contentDocument || frame.contentWindow.document;
+            if (!idoc) {
+              throw new Error("missing doc");
+            }
+            idoc.querySelectorAll("header").forEach(function (el) {
+              el.style.display = "none";
+            });
+            idoc.querySelectorAll("footer").forEach(function (el) {
+              el.style.display = "none";
+            });
+          } catch (ignore) {
+            /* If DOM access fails after load, fall back to Strategy B. */
+            crop.classList.add("embed-crop--strategy-crop");
+          }
+        } else {
+          /* Strategy B: cross-origin (typical for medni.ge on another host) — visual crop only. */
+          crop.classList.add("embed-crop--strategy-crop");
+        }
+      }
+
       function onFrameLoad() {
         if (panelEmbed.hidden) return;
         var src = frame.getAttribute("src") || "";
         if (!src || src.indexOf("medni.ge") === -1) return;
         clearLoadTimeout();
+        applyIframeChromeStrategy();
         loader.hidden = true;
         frame.classList.add("is-ready");
       }
 
       function beginIframeLoad() {
         clearLoadTimeout();
+        crop.classList.remove("embed-crop--strategy-crop");
         loader.hidden = false;
         frame.classList.remove("is-ready");
         frame.src = MEDNI_BOOKING_URL;
