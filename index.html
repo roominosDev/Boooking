@@ -287,11 +287,6 @@
     }
 
     .embed-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
       padding: 0.85rem 1rem 0.85rem 1.15rem;
       border-bottom: 1px solid var(--border);
       background: rgba(0, 0, 0, 0.2);
@@ -301,24 +296,6 @@
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text);
-    }
-
-    .btn-ghost {
-      font: inherit;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--accent);
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.4rem 0.75rem;
-      cursor: pointer;
-      transition: background 0.15s, border-color 0.15s;
-    }
-
-    .btn-ghost:hover {
-      background: rgba(61, 156, 240, 0.1);
-      border-color: var(--accent);
     }
 
     .embed-body {
@@ -452,7 +429,6 @@
     <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
       <div class="embed-head">
         <span>Medni · Book an appointment</span>
-        <button type="button" class="btn-ghost" id="btn-close-embed">Close</button>
       </div>
       <div class="embed-body">
         <div class="embed-loader" id="embed-loader">
@@ -472,8 +448,6 @@
   <script>
     (function () {
       var MEDNI_BOOKING_URL = "https://www.medni.ge/en/booking/medgel";
-      var btnClose = document.getElementById("btn-close-embed");
-      var mainWrap = document.getElementById("main-wrap");
       var panelEmbed = document.getElementById("panel-embed");
       var loader = document.getElementById("embed-loader");
       var frame = document.getElementById("booking-frame");
@@ -507,17 +481,9 @@
         }, 20000);
       }
 
-      function hideEmbed() {
-        panelEmbed.hidden = true;
-        mainWrap.classList.remove("embed-open");
-        clearLoadTimeout();
-      }
-
       frame.addEventListener("load", onFrameLoad);
 
       beginIframeLoad();
-
-      btnClose.addEventListener("click", hideEmbed);
     })();
   </script>
 </body>
