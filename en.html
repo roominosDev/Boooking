@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Book · Medgel Georgia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,8 +19,8 @@
       --shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
 
       /*
-        Cross-origin crop tuning (used only when Strategy B applies).
-        Approximate chrome heights on the embedded site; adjust if the partner layout changes.
+        Cross-origin crop tuning (Strategy B only). Desktop: moderate crop.
+        On phones Medni’s nav + bottom bars are taller — overridden in @media below.
       */
       --embed-chrome-header: clamp(52px, 10dvh, 88px);
       --embed-chrome-footer: clamp(80px, 14dvh, 160px);
@@ -33,10 +33,12 @@
     body {
       margin: 0;
       min-height: 100vh;
+      min-height: 100dvh;
       font-family: "DM Sans", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     .bg-gradient {
@@ -165,6 +167,61 @@
     .embed-crop--strategy-crop .booking-iframe {
       top: calc(-1 * var(--embed-chrome-header));
       height: calc(100% + var(--embed-chrome-header) + var(--embed-chrome-footer));
+    }
+
+    /* Tablets / small laptops: slightly more crop if layout tightens */
+    @media (max-width: 900px) {
+      :root {
+        --embed-chrome-header: clamp(56px, 11dvh, 96px);
+        --embed-chrome-footer: clamp(88px, 15dvh, 170px);
+      }
+    }
+
+    /*
+      Mobile: edge-to-edge card, safe-area padding, fill dynamic viewport (dvh/svh).
+      Larger --embed-chrome-* hides Medni header/footer that peek through when crop was tuned for desktop.
+    */
+    @media (max-width: 639px) {
+      :root {
+        --embed-chrome-header: clamp(76px, 17dvh, 130px);
+        --embed-chrome-footer: clamp(100px, 21dvh, 210px);
+      }
+
+      main {
+        padding: max(0.5rem, env(safe-area-inset-top, 0px))
+          max(0.5rem, env(safe-area-inset-right, 0px))
+          max(0.5rem, env(safe-area-inset-bottom, 0px))
+          max(0.5rem, env(safe-area-inset-left, 0px));
+        justify-content: flex-start;
+        align-items: stretch;
+        min-height: 100svh;
+        min-height: 100dvh;
+      }
+
+      .card-embed {
+        width: 100%;
+        max-width: none;
+        flex: 1 1 auto;
+        min-height: 0;
+        height: calc(
+          100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 1rem
+        );
+        height: calc(
+          100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 1rem
+        );
+        border-radius: 10px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      :root {
+        --embed-chrome-header: clamp(84px, 19dvh, 145px);
+        --embed-chrome-footer: clamp(108px, 23dvh, 230px);
+      }
+
+      .card-embed {
+        border-radius: 8px;
+      }
     }
   </style>
 </head>
