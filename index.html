@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medgel clinic</title>
+  <title>Book · Medgel Georgia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg: #0f1419;
@@ -15,7 +15,6 @@
       --text: #e8edf4;
       --muted: #8b9cb3;
       --accent: #3d9cf0;
-      --accent-dim: #2b7fc9;
       --radius: 12px;
       --shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
     }
@@ -43,239 +42,34 @@
       z-index: 0;
     }
 
-    .wrap {
+    main {
       position: relative;
       z-index: 1;
-      max-width: min(1280px, calc(100% - 2rem));
-      margin: 0 auto;
-      padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem) clamp(1.75rem, 4vw, 2.75rem);
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: clamp(1.75rem, 4vw, 2.5rem);
-      align-items: start;
-    }
-
-    @media (min-width: 900px) {
-      .wrap.embed-open {
-        grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
-        column-gap: clamp(2rem, 4.5vw, 3rem);
-        align-items: stretch;
-      }
-    }
-
-    .left-stack {
+      width: 100%;
+      margin: 0;
+      padding: clamp(1rem, 3vw, 2rem);
+      min-height: 100dvh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: stretch;
-      width: 100%;
-      max-width: 28rem;
-      justify-self: center;
-    }
-
-    @media (min-width: 900px) {
-      .wrap.embed-open .left-stack {
-        position: sticky;
-        top: clamp(1.5rem, 4vw, 2rem);
-      }
-    }
-
-    .biz-card {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0;
-      text-align: start;
-    }
-
-    .biz-card__ribbon {
-      height: 3px;
-      max-width: 4rem;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent-dim), var(--accent), #5eb8ff);
-      opacity: 0.95;
-      margin-bottom: 1.1rem;
-    }
-
-    .biz-card__inner {
-      padding: 0;
-    }
-
-    .biz-card__head {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      margin-bottom: 0.85rem;
-    }
-
-    .biz-card__mark {
-      flex-shrink: 0;
-      width: 3rem;
-      height: 3rem;
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(61, 156, 240, 0.22), rgba(61, 156, 240, 0.06));
-      border: none;
-      display: flex;
-      align-items: center;
       justify-content: center;
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .biz-card__head-text {
-      min-width: 0;
-      padding-top: 0.15rem;
-    }
-
-    .biz-card__title {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: clamp(1.5rem, 3.8vw, 1.85rem);
-      font-weight: 600;
-      line-height: 1.2;
-      margin: 0;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .badge {
-      display: inline-flex;
       align-items: center;
-      font-size: 0.6875rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.6rem;
-      border-radius: 999px;
-      line-height: 1;
-    }
-
-    .badge--ok {
-      color: #b8f5e0;
-      background: rgba(46, 196, 139, 0.2);
-      border: none;
-    }
-
-    .badge--type {
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.06);
-      border: none;
-    }
-
-    .biz-card__pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .biz-card__desc {
-      font-size: 0.9375rem;
-      line-height: 1.55;
-      color: var(--muted);
-      margin: 0 0 1.5rem;
-    }
-
-    .biz-services {
-      width: 100%;
-      max-width: 28rem;
-      justify-self: center;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0;
-    }
-
-    .biz-services__head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-
-    .biz-services__title {
-      font-family: "Fraunces", Georgia, serif;
-      font-size: 1.125rem;
-      font-weight: 600;
-      margin: 0;
-      letter-spacing: -0.02em;
-      color: var(--text);
-    }
-
-    .biz-services__more {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      white-space: nowrap;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.15s;
-    }
-
-    .biz-services__more:hover {
-      border-bottom-color: rgba(61, 156, 240, 0.5);
-    }
-
-    .biz-services__more:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    .biz-services__group {
-      margin-bottom: 1rem;
-    }
-
-    .biz-services__group:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .biz-services__label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 0.5rem;
-    }
-
-    .biz-services__chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    .service-chip {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 500;
-      line-height: 1.3;
-      color: #d4dee8;
-      padding: 0.4rem 0.65rem;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.22);
-      border: none;
+      box-sizing: border-box;
     }
 
     .card-embed {
       display: flex;
       flex-direction: column;
-      width: 100%;
+      flex: 0 0 auto;
+      width: min(1040px, calc(100% - 2rem));
       min-width: 0;
+      height: min(88dvh, 860px);
+      min-height: min(560px, 80dvh);
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
-      min-height: min(720px, 82vh);
     }
 
     .card-embed[hidden] {
@@ -297,7 +91,7 @@
     .embed-body {
       position: relative;
       flex: 1;
-      min-height: min(640px, 78vh);
+      min-height: 0;
       background: var(--bg);
     }
 
@@ -358,56 +152,8 @@
 <body>
   <div class="bg-gradient" aria-hidden="true"></div>
 
-  <main class="wrap embed-open" id="main-wrap">
-    <div class="left-stack">
-      <article class="biz-card" aria-labelledby="biz-name">
-        <div class="biz-card__ribbon" aria-hidden="true"></div>
-        <div class="biz-card__inner">
-          <header class="biz-card__head">
-            <div class="biz-card__mark" aria-hidden="true">M</div>
-            <div class="biz-card__head-text">
-              <h1 id="biz-name" class="biz-card__title">Medgel clinic</h1>
-            </div>
-          </header>
-          <div class="biz-card__pills" aria-label="Business verification">
-            <span class="badge badge--ok">Verified</span>
-            <span class="badge badge--type">Clinic</span>
-          </div>
-          <p class="biz-card__desc">Laser hair removal and professional aesthetic care — smooth, lasting results with a focus on comfort and safety.</p>
-        </div>
-      </article>
-
-      <section class="biz-services" aria-labelledby="services-title">
-        <div class="biz-services__head">
-          <h2 id="services-title" class="biz-services__title">Services</h2>
-          <a class="biz-services__more" href="https://medgel.ge/services" rel="noopener noreferrer" target="_blank">All services →</a>
-        </div>
-        <div class="biz-services__group">
-          <h3 class="biz-services__label">Face</h3>
-          <div class="biz-services__chips">
-            <span class="service-chip">Ultherapy</span>
-            <span class="service-chip">Facial cleansing</span>
-            <span class="service-chip">Microneedling</span>
-            <span class="service-chip">Acne treatment</span>
-            <span class="service-chip">Biorevitalization</span>
-            <span class="service-chip">Botox</span>
-            <span class="service-chip">Chemical peeling</span>
-            <span class="service-chip">Pigmentation treatment</span>
-            <span class="service-chip">Hydrafacial</span>
-          </div>
-        </div>
-        <div class="biz-services__group">
-          <h3 class="biz-services__label">Body</h3>
-          <div class="biz-services__chips">
-            <span class="service-chip">Laser hair removal</span>
-            <span class="service-chip">Biorevitalization</span>
-            <span class="service-chip">Mesotherapy</span>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <section class="card-embed" id="panel-embed" aria-label="Medni online booking">
+  <main>
+    <section class="card-embed" id="panel-embed" aria-label="Online booking">
       <div class="embed-head">
         <span>Medni · Book an appointment</span>
       </div>
